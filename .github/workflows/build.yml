@@ -40,5 +40,5 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            ${{ github.ref == 'refs/heads/master' && 'ghcr.io/ianneub/pgvector:latest' || '' }}  
-            ghcr.io/ianneub/pgvector:${{ github.ref_name }}
+            ${{ github.ref == 'refs/heads/master' && 'ghcr.io/ianneub/postgres-vector:latest' || '' }}  
+            ghcr.io/ianneub/postgres-vector:${{ github.ref_name }}
