@@ -3,10 +3,11 @@ name: Build and Deploy
 
 # Docs
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
-# https://docs.github.com/en/actions/using-workflows/reusing-workflows
 
 on:
   push:
+    tags:
+      - '*'
     branches:
       - master
 
@@ -40,3 +41,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
