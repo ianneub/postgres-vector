@@ -1,0 +1,6 @@
+services:
+  db:
+    build: .
+    environment:
+      POSTGRES_USER: asdf
+      POSTGRES_PASSWORD: asdfasdf
