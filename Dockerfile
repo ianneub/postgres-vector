@@ -1,9 +1,9 @@
-FROM postgres:16.3 AS builder
+FROM postgres:17.2 AS builder
 
 # Install necessary dependencies for building pgvector
 RUN apt-get update && apt-get install -y \
   build-essential \
-  postgresql-server-dev-16 \
+  postgresql-server-dev-17 \
   git \
   ca-certificates \  
   && update-ca-certificates \
@@ -11,19 +11,19 @@ RUN apt-get update && apt-get install -y \
 
 # Clone and build pgvector
 WORKDIR /tmp
-RUN git clone --depth 1 --branch v0.7.0 https://github.com/pgvector/pgvector.git
+RUN git clone --depth 1 --branch v0.8.0 https://github.com/pgvector/pgvector.git
 
 WORKDIR /tmp/pgvector
 RUN make
 RUN make install
 
 # Extend the official PostgreSQL image
-FROM postgres:16.3
+FROM postgres:17.2
 
 # copy extensions to the final image
 COPY --from=builder /usr/include/postgresql /usr/include/postgresql
-COPY --from=builder /usr/lib/postgresql/16/lib /usr/lib/postgresql/16/lib
-COPY --from=builder /usr/share/postgresql/16/extension /usr/share/postgresql/16/extension
+COPY --from=builder /usr/lib/postgresql/17/lib /usr/lib/postgresql/17/lib
+COPY --from=builder /usr/share/postgresql/17/extension /usr/share/postgresql/17/extension
 
 # Enable pgvector in PostgreSQL
 # RUN echo "shared_preload_libraries = 'pgvector'" >> /usr/share/postgresql/postgresql.conf
